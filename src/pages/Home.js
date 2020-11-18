@@ -2,19 +2,23 @@ import React from 'react';
 
 import signOut from '../hooks/signOut';
 
-import Button from '../components/Button';
+import ButtonLinkedin from '../components/ButtonLinkedin.jsx';
+import { useHistory } from 'react-router-dom';
 
 
 const Home = () => {
 
-  function logout() {
-    console.log(signOut());
-    console.log('asdas')
+	const history = useHistory();
+
+  async function logout() {
+		console.log('error!')
+		await signOut();
+		history.push('/');
   }
 
   return (
     <>
-      <Button onClick={logout}>Sign Out</Button>
+      <ButtonLinkedin onClick={() => logout()}>Sign Out</ButtonLinkedin>
     </>
   );
 }

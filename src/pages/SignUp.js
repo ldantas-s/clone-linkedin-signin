@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 // Hooks
 import signUp from '../hooks/signUp';
 // Components
-import InputField from '../components/InputField';
-import Button from '../components/Button';
+import InputField from '../components/InputField.jsx';
+import ButtonLinkedin from '../components/ButtonLinkedin.jsx';
 
 
 function SignUp() {
@@ -42,15 +42,15 @@ function SignUp() {
       <form onSubmit={submitRegister}>
         { message && <div style={{ color: 'orangered' }}>{ message }</div> }
 
-        <InputField 
+        <InputField
           label="E-mail ou telefone"
           type="text"
           name="email"
           setValue={(e) => setUserInfo({ ...userInfo, 'email': e.target.value })}
           autoComplete="off"
         />
-        
-        <InputField 
+
+        <InputField
           label="Senha"
           type="password"
           name="password"
@@ -58,7 +58,7 @@ function SignUp() {
           autoComplete="off"
         />
         <p>Ao clicar em Aceite e cadastre-se, você aceita o Contrato do Usuário, a Política de Privacidade e a Política de Cookies do LinkedIn. </p>
-        <Button>Aceite e cadastre-se</Button>
+        <ButtonLinkedin>Aceite e cadastre-se</ButtonLinkedin>
       </form>
 
       <div>
@@ -68,7 +68,7 @@ function SignUp() {
         <button>Entrar com o Google</button>
       </div>
       <p>Já se cadastrou no LinkedIn? <Link to="/">Entrar</Link></p>
-      
+
     </>
   );
 }

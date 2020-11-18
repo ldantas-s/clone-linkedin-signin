@@ -1,19 +1,19 @@
 import React from 'react';
 
 
-const Button = ({ children }) => {
+function ButtonLinkedin({ children }) {
   return (
 		<button
 			className="
 				w-full
-				bg-blue-500
+				bg-blue-600
 				p-5
 				rounded
 				text-white
 				text-lg
 				font-medium
 				shadow-md
-				hover:bg-blue-600
+				hover:bg-blue-500
 				transition-all
 				duration-200
 			"
@@ -23,4 +23,4 @@ const Button = ({ children }) => {
   );
 }
 
-export default Button;
+export default ButtonLinkedin;

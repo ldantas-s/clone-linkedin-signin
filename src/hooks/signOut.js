@@ -5,7 +5,7 @@ function signOut() {
 
   auth.signOut()
     .then(result => 'heey')
-    .catch(err => err.message);
+    .catch(err => console.error(err.message));
 }
 
 export default signOut;
