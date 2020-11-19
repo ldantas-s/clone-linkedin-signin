@@ -13,6 +13,7 @@ function InputField({ label, type, name, setValue, ...rest }) {
 		p-5
 		inset-y-0
 		right-0
+		cursor-pointer
 	`;
 
   return (

@@ -1,8 +1,7 @@
 import React from 'react';
 
-
 function ButtonLinkedin({ children }) {
-  return (
+	return (
 		<button
 			className="
 				w-full
@@ -18,9 +17,9 @@ function ButtonLinkedin({ children }) {
 				duration-200
 			"
 		>
-      { children }
-    </button>
-  );
+			{children}
+		</button>
+	);
 }
 
 export default ButtonLinkedin;
