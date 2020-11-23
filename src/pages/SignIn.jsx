@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Formik, Form } from 'formik';
+import * as yup from 'yup';
 
 // Hooks
 import signIn from '../hooks/signIn';
@@ -12,29 +14,30 @@ import ButtonGoogle from '../components/ButtonGoogle';
 //images
 import logoLinkedin from '../assets/images/logo_linkedin.png';
 
+const validationLogin = yup.object().shape({
+	email: yup
+		.string()
+		.email('Digite um e-mail válido!')
+		.required('Campo obrigatório!'),
+	password: yup.string().required('Campo obrigatório!'),
+});
+
 function SignIn() {
-	const [userInfo, setUserInfo] = useState({
-		email: '',
-		password: '',
-	});
+	// const [userInfo, setUserInfo] = useState({
+	// 	email: '',
+	// 	password: '',
+	// });
 	const [message, setMessage] = useState('');
 	const history = useHistory();
 
 	// Function SubmitUser
-	async function submitUser(e) {
-		e.preventDefault();
+	async function handleSubmitLogin(values) {
+		console.log(values);
 
-		if (!userInfo.email) {
-			setMessage('Por favor, preencha o campo de email!');
-			return;
-		} else if (!userInfo.password) {
-			setMessage('Por favor, preencha o campo de senha!');
-			return;
-		}
 		// Authentication
-		await signIn(userInfo);
-		history.push('/home');
-		setMessage('');
+		// await signIn(values);
+		// history.push('/hom');
+		// setMessage('');
 	}
 
 	return (
@@ -49,33 +52,35 @@ function SignIn() {
 					novidades na sua profissão.
 				</p>
 
-				<form onSubmit={submitUser} className="mt-12 mb-6 lg:mt-8 lg:mb-2">
-					{message && <div className="text-orange-500">{message}</div>}
+				<Formik
+					onSubmit={handleSubmitLogin}
+					initialValues={{ email: '', password: '' }}
+					validationSchema={validationLogin}
+					className="mt-12 mb-6 lg:mt-8 lg:mb-2"
+				>
+					{(props) => (
+						<Form>
+							{message && <div className="text-orange-500">{message}</div>}
 
-					<InputField
-						label="E-mail ou telefone"
-						type="text"
-						name="email"
-						value={userInfo.email}
-						setValue={(e) =>
-							setUserInfo({ ...userInfo, email: e.target.value })
-						}
-						autoComplete="off"
-					/>
+							<InputField
+								label="E-mail ou telefone"
+								type="text"
+								name="email"
+								autoComplete="off"
+								value={props.values.email}
+							/>
 
-					<InputField
-						label="Senha"
-						type="password"
-						name="password"
-						value={userInfo.password}
-						setValue={(e) =>
-							setUserInfo({ ...userInfo, password: e.target.value })
-						}
-						autoComplete="off"
-					/>
+							<InputField
+								label="Senha"
+								type="password"
+								name="password"
+								autoComplete="off"
+							/>
 
-					<ButtonLinkedin>Entrar</ButtonLinkedin>
-				</form>
+							<ButtonLinkedin type="submit">Entrar</ButtonLinkedin>
+						</Form>
+					)}
+				</Formik>
 
 				<Divider />
 				<ButtonGoogle />

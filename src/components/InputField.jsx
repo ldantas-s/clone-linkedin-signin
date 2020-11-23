@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 import { ErrorMessage, Field } from 'formik';
 
-function InputField({ label, type, name, setValue, ...rest }) {
+function InputField({ label, type, name, ...rest }) {
 	let iconPassword = type === 'password' ? true : false;
 	const [stateVisiblePassword, setStateVisiblePassword] = useState(true);
 
@@ -68,8 +68,6 @@ function InputField({ label, type, name, setValue, ...rest }) {
 					}
 					name={name}
 					id={name}
-					value={rest.value}
-					onChange={setValue}
 					autoComplete={rest.autoComplete}
 				/>
 			</div>
