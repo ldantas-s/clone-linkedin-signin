@@ -1,82 +1,96 @@
 import React, { useState } from 'react';
-
+import * as Yup from 'yup';
+import { Formik, Form } from 'formik';
 // Hooks
 import signUp from '../hooks/signUp';
 // Components
 import InputField from '../components/InputField.jsx';
 import ButtonLinkedin from '../components/ButtonLinkedin.jsx';
 import ButtonGoogle from '../components/ButtonGoogle';
-
 import LinkCustom from '../components/LinkCustom';
 import Divider from '../components/Divider';
 // images
 import logoLinkedin from '../assets/images/logo_linkedin.png';
 
+const validationSignup = Yup.object().shape({
+	email: Yup.string()
+		.email('Digite um e-mail válido!')
+		.required('E-mail obrigatório!'),
+	password: Yup.string()
+		.min(6, 'A senha deve ter pelo menos 6 caracteres')
+		.required('Senha obrigatória!'),
+});
+
 function SignUp() {
-	const [userInfo, setUserInfo] = useState({
-		email: '',
-		password: '',
+	const [message, setMessage] = useState({
+		type: '',
+		message: '',
 	});
-	const [message, setMessage] = useState('');
 
-	async function submitRegister(e) {
-		e.preventDefault();
+	async function handleSubmit(values) {
+		// await signUp(userInfo).then((cred) => console.log(cred));
 
-		if (!userInfo.email) {
-			setMessage('Por favor, preencha o campo de email!');
-			return;
-		} else if (!userInfo.password) {
-			setMessage('Por favor, preencha o campo de senha!');
-			return;
-		}
-		setMessage('');
-		console.log(userInfo);
+		console.log(values);
 
-		console.log(await signUp(userInfo));
+		setMessage({
+			type: 'success',
+			message: 'Conta criada com sucesso!',
+		});
+		setTimeout(() => setMessage({ type: '', message: '' }), 3000);
 	}
 
 	return (
 		<section className="h-screen flex flex-col justify-between w-full px-6 py-12">
 			<div className="text-center mx-auto lg:w-1/3">
 				<h1 className="w-6/12 mx-auto pb-6 lg:pb-1">
-					<img src={logoLinkedin} alt="" />
+					<img src={logoLinkedin} alt="Logo linkedin" />
 				</h1>
 				<h2 className="text-xl lg:mt-2">
 					Aproveite sua vida profissional ao máximo{' '}
 				</h2>
 
-				<form onSubmit={submitRegister}>
-					{message && <div style={{ color: 'orangered' }}>{message}</div>}
+				<Formik
+					onSubmit={handleSubmit}
+					initialValues={{ email: '', password: '' }}
+					validationSchema={validationSignup}
+				>
+					<Form>
+						{message.message && (
+							<div
+								className={
+									message.type === 'error'
+										? 'text-orange-500'
+										: 'text-green-500'
+								}
+							>
+								{message.message}
+							</div>
+						)}
 
-					<InputField
-						label="E-mail ou telefone"
-						type="text"
-						name="email"
-						value={userInfo.email}
-						setValue={(e) =>
-							setUserInfo({ ...userInfo, email: e.target.value })
-						}
-						autoComplete="off"
-					/>
+						<InputField
+							label="E-mail ou telefone"
+							type="text"
+							name="email"
+							autoComplete="off"
+						/>
 
-					<InputField
-						label="Senha"
-						type="password"
-						name="password"
-						value={userInfo.password}
-						setValue={(e) =>
-							setUserInfo({ ...userInfo, password: e.target.value })
-						}
-						autoComplete="off"
-					/>
-					<p className="mb-4 text-gray-700">
-						Ao clicar em Aceite e cadastre-se, você aceita o{' '}
-						<LinkCustom toLink="/">Contrato do Usuário</LinkCustom>, a{' '}
-						<LinkCustom toLink="/">Política de Privacidade</LinkCustom> e a{' '}
-						<LinkCustom toLink="/">Política de Cookies</LinkCustom> do LinkedIn.{' '}
-					</p>
-					<ButtonLinkedin>Aceite e cadastre-se</ButtonLinkedin>
-				</form>
+						<InputField
+							label="Senha"
+							type="password"
+							name="password"
+							autoComplete="off"
+						/>
+
+						<p className="mb-4 text-gray-700">
+							Ao clicar em Aceite e cadastre-se, você aceita o{' '}
+							<LinkCustom toLink="/">Contrato do Usuário</LinkCustom>, a{' '}
+							<LinkCustom toLink="/">Política de Privacidade</LinkCustom> e a{' '}
+							<LinkCustom toLink="/">Política de Cookies</LinkCustom> do
+							LinkedIn.{' '}
+						</p>
+						<ButtonLinkedin type="submit">Aceite e cadastre-se</ButtonLinkedin>
+					</Form>
+				</Formik>
 
 				<Divider />
 				<ButtonGoogle />
