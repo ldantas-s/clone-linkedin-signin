@@ -1,8 +1,9 @@
 import React from 'react';
 
-function ButtonLinkedin({ children }) {
+function ButtonLinkedin({ children, type = 'button' }) {
 	return (
 		<button
+			type={type}
 			className="
 				w-full
 				bg-blue-600
