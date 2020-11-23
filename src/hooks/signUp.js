@@ -2,11 +2,11 @@ import auth from '../firebase/config';
 
 
 function signUp({ email, password }) {
-
-  auth.createUserWithEmailAndPassword(email, password)
-    .then(result => result)
-    .catch(err => err);
-
+	return new Promise((resolve, reject) => {
+		auth.createUserWithEmailAndPassword(email, password)
+			.then(cred => resolve(cred))
+			.catch(err => reject(err));
+	});
 }
 
 export default signUp;

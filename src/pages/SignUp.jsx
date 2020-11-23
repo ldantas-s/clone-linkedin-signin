@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 // Hooks
@@ -27,16 +27,27 @@ function SignUp() {
 		message: '',
 	});
 
+	const formRef = useRef(null);
+
 	async function handleSubmit(values) {
-		// await signUp(userInfo).then((cred) => console.log(cred));
-
-		console.log(values);
-
-		setMessage({
-			type: 'success',
-			message: 'Conta criada com sucesso!',
-		});
-		setTimeout(() => setMessage({ type: '', message: '' }), 3000);
+		await signUp(values)
+			.then((cred) => {
+				if (cred) {
+					setMessage({
+						type: 'success',
+						message: 'Conta criada com sucesso!',
+					});
+					// redirect to other page
+				}
+			})
+			.catch((err) => {
+				setMessage({
+					type: 'error',
+					message: err.message,
+				});
+			});
+		formRef.current.reset();
+		setTimeout(() => setMessage({ type: '', message: '' }), 4000);
 	}
 
 	return (
@@ -54,7 +65,7 @@ function SignUp() {
 					initialValues={{ email: '', password: '' }}
 					validationSchema={validationSignup}
 				>
-					<Form>
+					<Form ref={formRef}>
 						{message.message && (
 							<div
 								className={
