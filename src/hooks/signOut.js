@@ -2,10 +2,11 @@ import auth from '../firebase/config';
 
 
 function signOut() {
-
-  auth.signOut()
-    .then(result => 'heey')
-    .catch(err => console.error(err.message));
+	return new Promise((resolve, reject) => {
+		auth.signOut()
+			.then(() => resolve('success'))
+			.catch(err => reject(err));
+	});
 }
 
 export default signOut;

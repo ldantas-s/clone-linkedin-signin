@@ -1,8 +1,9 @@
 import React from 'react';
 
-function ButtonLinkedin({ children, type = 'button' }) {
+function ButtonLinkedin({ children, type = 'button', ...rest }) {
 	return (
 		<button
+			{...rest}
 			type={type}
 			className="
 				w-full
