@@ -23,21 +23,21 @@ const validationLogin = yup.object().shape({
 });
 
 function SignIn() {
-	// const [userInfo, setUserInfo] = useState({
-	// 	email: '',
-	// 	password: '',
-	// });
 	const [message, setMessage] = useState('');
 	const history = useHistory();
 
 	// Function SubmitUser
 	async function handleSubmitLogin(values) {
-		console.log(values);
-
 		// Authentication
-		// await signIn(values);
-		// history.push('/hom');
-		// setMessage('');
+		await signIn(values)
+			.then((cred) => {
+				console.log(cred.user);
+				history.push('/home');
+			})
+			.catch((err) => {
+				setMessage(err.message);
+				console.log('ERROR', err);
+			});
 	}
 
 	return (
@@ -60,14 +60,13 @@ function SignIn() {
 				>
 					{(props) => (
 						<Form>
-							{message && <div className="text-orange-500">{message}</div>}
+							{message && <div className="text-orange-500 my-2">{message}</div>}
 
 							<InputField
 								label="E-mail ou telefone"
 								type="text"
 								name="email"
 								autoComplete="off"
-								value={props.values.email}
 							/>
 
 							<InputField

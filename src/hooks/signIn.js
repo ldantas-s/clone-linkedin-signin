@@ -2,11 +2,11 @@ import auth from '../firebase/config';
 
 
 function signIn({ email, password }) {
-
-    auth.signInWithEmailAndPassword(email, password)
-      .then(result => result)
-      .catch(err => 'eeeita deu errado');
+	return new Promise((resolve, reject) => {
+		auth.signInWithEmailAndPassword(email, password)
+			.then(result => resolve(result))
+			.catch(err => reject(err));
+	});
 }
 
-// xoton64632@treeheir.com
 export default signIn;
