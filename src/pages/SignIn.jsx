@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
@@ -14,6 +14,7 @@ import ButtonGoogle from '../components/ButtonGoogle';
 //images
 import logoLinkedin from '../assets/images/logo_linkedin.png';
 
+// Validation form
 const validationLogin = yup.object().shape({
 	email: yup
 		.string()
@@ -25,6 +26,7 @@ const validationLogin = yup.object().shape({
 function SignIn() {
 	const [message, setMessage] = useState('');
 	const history = useHistory();
+	const formLoginRef = useRef(null);
 
 	// Function SubmitUser
 	async function handleSubmitLogin(values) {
@@ -37,6 +39,8 @@ function SignIn() {
 			.catch((err) => {
 				setMessage(err.message);
 				console.log('ERROR', err);
+				formLoginRef.current.reset();
+				formLoginRef.current[0].focus();
 			});
 	}
 
@@ -59,7 +63,7 @@ function SignIn() {
 					className="mt-12 mb-6 lg:mt-8 lg:mb-2"
 				>
 					{(props) => (
-						<Form>
+						<Form ref={formLoginRef}>
 							{message && <div className="text-orange-500 my-2">{message}</div>}
 
 							<InputField
