@@ -43,7 +43,7 @@ function SignUp() {
 			.catch((err) => {
 				setMessage({
 					type: 'error',
-					message: err.message,
+					message: 'O endereço de e-mail já está sendo usado por outra conta.',
 				});
 			});
 		formRef.current.reset();
