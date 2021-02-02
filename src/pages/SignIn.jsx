@@ -13,6 +13,8 @@ import Divider from '../components/Divider';
 import ButtonGoogle from '../components/ButtonGoogle';
 //images
 import logoLinkedin from '../assets/images/logo_linkedin.png';
+// Context
+import { useAuth } from '../context/authContext';
 
 // Validation form
 const validationLogin = yup.object().shape({
@@ -27,13 +29,14 @@ function SignIn() {
 	const [message, setMessage] = useState('');
 	const history = useHistory();
 	const formLoginRef = useRef(null);
+	const { setUser } = useAuth();
 
 	// Function SubmitUser
 	async function handleSubmitLogin(values) {
 		// Authentication
 		await signIn(values)
 			.then((cred) => {
-				console.log(cred.user);
+				setUser(cred.user);
 				history.push('/home');
 			})
 			.catch((err) => {
