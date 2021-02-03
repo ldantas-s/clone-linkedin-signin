@@ -32,9 +32,9 @@ function SignIn() {
 	const { setUser } = useAuth();
 
 	// Function SubmitUser
-	async function handleSubmitLogin(values) {
+	function handleSubmitLogin(values) {
 		// Authentication
-		await signIn(values)
+		signIn(values)
 			.then((cred) => {
 				setUser(cred.user);
 				history.push('/home');
