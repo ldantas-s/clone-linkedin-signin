@@ -30,13 +30,20 @@ function SignIn() {
 	const history = useHistory();
 	const formLoginRef = useRef(null);
 	const { setUser } = useAuth();
+	const [loading, setLoading] = useState(false);
 
 	// Function SubmitUser
 	function handleSubmitLogin(values) {
+		setLoading(true);
 		// Authentication
 		signIn(values)
 			.then((cred) => {
+				setLoading(false);
 				setUser(cred.user);
+				sessionStorage.setItem(
+					'userInfoSession',
+					JSON.stringify({ uid: cred.user.uid, email: cred.user.email })
+				);
 				history.push('/home');
 			})
 			.catch((err) => {
@@ -82,7 +89,7 @@ function SignIn() {
 								name="password"
 								autoComplete="off"
 							/>
-
+							{loading && <p>loading</p>}
 							<ButtonLinkedin type="submit">Entrar</ButtonLinkedin>
 						</Form>
 					)}
