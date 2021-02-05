@@ -89,7 +89,11 @@ function SignIn() {
 								name="password"
 								autoComplete="off"
 							/>
-							{loading && <p>loading</p>}
+							{loading && (
+								<div className="w-1/2 h-2 mx-auto my-2 bg-blue-100 rounded overflow-hidden">
+									<div className="w-5 h-2 transform rounded bg-blue-400 animate-go-come"></div>
+								</div>
+							)}
 							<ButtonLinkedin type="submit">Entrar</ButtonLinkedin>
 						</Form>
 					)}
