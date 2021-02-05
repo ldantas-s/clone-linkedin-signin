@@ -23,9 +23,11 @@ const Home = () => {
 
 	return (
 		<section className="h-screen flex flex-col justify-center w-full px-6 py-12">
-			<h1 className="text-3xl">Welcome to the Linkedin</h1>
-			<h2 className="text-2xl mb-3 font-medium">{user.email}</h2>
-			<ButtonLinkedin onClick={() => logout()}>Sign Out</ButtonLinkedin>
+			<div className="text-center mx-auto lg:w-1/3">
+				<h1 className="text-3xl">Welcome to the Linkedin</h1>
+				<h2 className="text-2xl mb-3 font-medium">{user.email}</h2>
+				<ButtonLinkedin onClick={() => logout()}>Sign Out</ButtonLinkedin>
+			</div>
 		</section>
 	);
 };
