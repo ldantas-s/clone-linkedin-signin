@@ -8,7 +8,17 @@ module.exports = {
 		'./src/**/*.js',
 	],
   theme: {
-    extend: {},
+    extend: {
+			keyframes: {
+				goCome: {
+					'0%, 100%': { transform: 'translateX(-1rem)' },
+					'50%': { transform: 'translateX(13rem)' }
+				}
+			},
+			animation: {
+				'go-come': '2s linear infinite goCome'
+			}
+		},
   },
   variants: {},
   plugins: [],
