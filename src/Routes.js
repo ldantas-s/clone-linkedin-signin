@@ -8,6 +8,7 @@ import Home from './pages/Home.jsx';
 
 // Context
 import ProvideAuth, { useAuth } from './context/authContext.js';
+import NotFound from './pages/NotFound.jsx';
 
 const Routes = () => {
   return (
@@ -19,6 +20,9 @@ const Routes = () => {
 					<PrivateRoute path="/home">
 						<Home />
 					</PrivateRoute>
+					<Route path="*">
+						<NotFound />
+					</Route>
 				</Switch>
 			</BrowserRouter>
 		</ProvideAuth>
