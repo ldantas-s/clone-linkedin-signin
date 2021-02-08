@@ -47,6 +47,7 @@ function SignIn() {
 				history.push('/home');
 			})
 			.catch((err) => {
+				setLoading(false);
 				setMessage(err.message);
 				console.log('ERROR', err);
 				formLoginRef.current.reset();
