@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import * as Yup from 'yup';
-import { Formik, Form } from 'formik';
+import { useFormik } from 'formik';
+import { Link } from 'react-router-dom';
 // Hooks
 import signUp from '../hooks/signUp';
 // Components
@@ -37,7 +38,6 @@ function SignUp() {
 						type: 'success',
 						message: 'Conta criada com sucesso!',
 					});
-					// redirect to other page
 				}
 			})
 			.catch((err) => {
@@ -50,6 +50,12 @@ function SignUp() {
 		setTimeout(() => setMessage({ type: '', message: '' }), 4000);
 	}
 
+	const formik = useFormik({
+		initialValues: { email: '', password: '' },
+		validationSchema: validationSignup,
+		onSubmit: (values) => handleSubmit(values),
+	});
+
 	return (
 		<section className="h-screen flex flex-col justify-between w-full px-6 py-12">
 			<div className="text-center mx-auto lg:w-1/3">
@@ -60,48 +66,56 @@ function SignUp() {
 					Aproveite sua vida profissional ao máximo{' '}
 				</h2>
 
-				<Formik
-					onSubmit={handleSubmit}
-					initialValues={{ email: '', password: '' }}
-					validationSchema={validationSignup}
-				>
-					<Form ref={formRef}>
-						{message.message && (
-							<div
-								className={
-									message.type === 'error'
-										? 'text-orange-500'
-										: 'text-green-500'
-								}
-							>
-								{message.message}
-							</div>
-						)}
+				<form ref={formRef} onSubmit={formik.handleSubmit}>
+					{message.message && (
+						<div
+							className={
+								message.type === 'error' ? 'text-orange-500' : 'text-green-500'
+							}
+						>
+							{message.message}{' '}
+							{message.type === 'success' ? (
+								<Link to="/">
+									<span className="text-blue-700 underline hover:text-blue-900">
+										Login
+									</span>
+								</Link>
+							) : null}
+						</div>
+					)}
 
-						<InputField
-							label="E-mail ou telefone"
-							type="text"
-							name="email"
-							autoComplete="off"
-						/>
+					<InputField
+						label="E-mail ou telefone"
+						type="text"
+						name="email"
+						autoComplete="off"
+						value={formik.values.email}
+						onChange={formik.handleChange}
+					/>
+					{formik.errors.email ? (
+						<div className="py-2 text-red-600">{formik.errors.email}</div>
+					) : null}
 
-						<InputField
-							label="Senha"
-							type="password"
-							name="password"
-							autoComplete="off"
-						/>
+					<InputField
+						label="Senha"
+						type="password"
+						name="password"
+						autoComplete="off"
+						value={formik.values.password}
+						onChange={formik.handleChange}
+					/>
+					{formik.errors.email ? (
+						<div className="py-2 text-red-600">{formik.errors.password}</div>
+					) : null}
 
-						<p className="mb-4 text-gray-700">
-							Ao clicar em Aceite e cadastre-se, você aceita o{' '}
-							<LinkCustom toLink="/">Contrato do Usuário</LinkCustom>, a{' '}
-							<LinkCustom toLink="/">Política de Privacidade</LinkCustom> e a{' '}
-							<LinkCustom toLink="/">Política de Cookies</LinkCustom> do
-							LinkedIn.{' '}
-						</p>
-						<ButtonLinkedin type="submit">Aceite e cadastre-se</ButtonLinkedin>
-					</Form>
-				</Formik>
+					<p className="mb-4 text-gray-700">
+						Ao clicar em Aceite e cadastre-se, você aceita o{' '}
+						<LinkCustom toLink="/">Contrato do Usuário</LinkCustom>, a{' '}
+						<LinkCustom toLink="/">Política de Privacidade</LinkCustom> e a{' '}
+						<LinkCustom toLink="/">Política de Cookies</LinkCustom> do LinkedIn.{' '}
+					</p>
+					<ButtonLinkedin type="submit">Aceite e cadastre-se</ButtonLinkedin>
+				</form>
 
 				<Divider />
 				<ButtonGoogle />
