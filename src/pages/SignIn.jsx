@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Formik, Form } from 'formik';
+import { useFormik } from 'formik';
 import * as yup from 'yup';
 
 // Hooks
@@ -55,6 +55,12 @@ function SignIn() {
 			});
 	}
 
+	const formik = useFormik({
+		initialValues: { email: '', password: '' },
+		validationSchema: validationLogin,
+		onSubmit: (values) => handleSubmitLogin(values),
+	});
+
 	return (
 		<section className="h-screen flex flex-col justify-between w-full px-6 py-12">
 			<div className="text-center mx-auto lg:w-1/3">
@@ -67,38 +73,44 @@ function SignIn() {
 					novidades na sua profissão.
 				</p>
 
-				<Formik
-					onSubmit={handleSubmitLogin}
-					initialValues={{ email: '', password: '' }}
-					validationSchema={validationLogin}
+				<form
 					className="mt-12 mb-6 lg:mt-8 lg:mb-2"
+					onSubmit={formik.handleSubmit}
+					ref={formLoginRef}
 				>
-					{(props) => (
-						<Form ref={formLoginRef}>
-							{message && <div className="text-orange-500 my-2">{message}</div>}
+					{message && <div className="text-orange-500 my-2">{message}</div>}
 
-							<InputField
-								label="E-mail ou telefone"
-								type="text"
-								name="email"
-								autoComplete="off"
-							/>
+					<InputField
+						label="E-mail ou telefone"
+						type="text"
+						name="email"
+						autoComplete="off"
+						onChange={formik.handleChange}
+						value={formik.values.email}
+					/>
+					{formik.errors.email ? (
+						<div className="py-2 text-red-600">{formik.errors.email}</div>
+					) : null}
 
-							<InputField
-								label="Senha"
-								type="password"
-								name="password"
-								autoComplete="off"
-							/>
-							{loading && (
-								<div className="w-1/2 h-2 mx-auto my-2 bg-blue-100 rounded overflow-hidden">
-									<div className="w-5 h-2 transform rounded bg-blue-400 animate-go-come"></div>
-								</div>
-							)}
-							<ButtonLinkedin type="submit">Entrar</ButtonLinkedin>
-						</Form>
+					<InputField
+						label="Senha"
+						type="password"
+						name="password"
+						autoComplete="off"
+						value={formik.values.password}
+						onChange={formik.handleChange}
+					/>
+					{formik.errors.password ? (
+						<div className="py-2 text-red-600">{formik.errors.password}</div>
+					) : null}
+
+					{loading && (
+						<div className="w-1/2 h-2 mx-auto my-2 bg-blue-100 rounded overflow-hidden">
+							<div className="w-5 h-2 transform rounded bg-blue-400 animate-go-come"></div>
+						</div>
 					)}
-				</Formik>
+					<ButtonLinkedin type="submit">Entrar</ButtonLinkedin>
+				</form>
 
 				<Divider />
 				<ButtonGoogle />
