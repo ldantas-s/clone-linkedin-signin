@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
-import { ErrorMessage, Field } from 'formik';
 
 function InputField({ label, type, name, ...rest }) {
 	let iconPassword = type === 'password' ? true : false;
@@ -29,7 +28,7 @@ function InputField({ label, type, name, ...rest }) {
 					text-gray-800
 					h-full
 					flex
-					${true ? ' mt-1 ml-2 text-sm items-start' : 'mx-5 items-center text-xl'}
+					${rest.value ? ' mt-1 ml-2 text-sm items-start' : 'mx-5 items-center text-xl'}
 					transition-all
 					duration-100
 				`}
@@ -52,7 +51,7 @@ function InputField({ label, type, name, ...rest }) {
 						/>
 					))}
 
-				<Field
+				<input
 					className="
 					w-full
 					h-14
@@ -69,13 +68,9 @@ function InputField({ label, type, name, ...rest }) {
 					name={name}
 					id={name}
 					autoComplete={rest.autoComplete}
+					{...rest}
 				/>
 			</div>
-			<ErrorMessage
-				className="py-2 text-red-600"
-				component="span"
-				name={name}
-			/>
 		</div>
 	);
 }
