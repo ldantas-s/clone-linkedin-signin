@@ -37,7 +37,31 @@ A linkedin clone, it was a great project with the purpose of learning more about
 
 ## How to run
 
-> IN BUILD...
+1. Make Download:
+
+   1.1. In this link: [clone-linkedin-signin](https://github.com/ldantas-s/clone-linkedin-signin/archive/main.zip)
+
+   1.2. Or, make a `git clone https://github.com/ldantas-s/clone-linkedin-signin.git`
+
+2. After that you make download or clone repository, in the project folder you should create a .env file with the variables below and yours values:
+
+> The tutorial in this [Creating a project on Firebase](https://ldantas-s.medium.com/criando-um-projeto-no-firebase-6222dfa71a63) it will help you create a project in the firebase and get the values to apply on the variables below.
+
+```
+REACT_APP_API_KEY=[VALUE]
+REACT_APP_AUTH_DOMAIN=[VALUE]
+REACT_APP_DATABASE_URL=[VALUE]
+REACT_APP_PROJECT_ID=[VALUE]
+REACT_APP_STORAGE_BUCKET=[VALUE]
+REACT_APP_MESSAGING_SENDER_ID=[VALUE]
+REACT_APP_ID=[VALUE]
+```
+
+3. Now, you will run the commands below in the terminal:
+
+   3.1. `yarn` or `npm install` to install the dependencies;
+
+   3.2. `yarn start` or `npm start` to run the project;
 
 [Go top](#table-of-contents)
 
