@@ -50,12 +50,13 @@ A linkedin clone, it was a great project with the purpose of learning more about
 ```
 REACT_APP_API_KEY=[VALUE]
 REACT_APP_AUTH_DOMAIN=[VALUE]
-REACT_APP_DATABASE_URL=[VALUE]
 REACT_APP_PROJECT_ID=[VALUE]
 REACT_APP_STORAGE_BUCKET=[VALUE]
 REACT_APP_MESSAGING_SENDER_ID=[VALUE]
 REACT_APP_ID=[VALUE]
 ```
+
+> For you use the authentication function of firebase, you need to active the E-mail/password of the Sign-in method
 
 3. Now, you will run the commands below in the terminal:
 
